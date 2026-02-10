@@ -1,0 +1,3 @@
+echo "Rodando lint..."
+
+npm run lint
