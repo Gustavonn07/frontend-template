@@ -1,4 +1,4 @@
-import { HttpMethods } from "../types/api/http-types"
+import { HttpMethods } from "../../shared/types/api/http-types"
 
 /**
  * Mapa de endpoints da API.
@@ -17,7 +17,7 @@ import { HttpMethods } from "../types/api/http-types"
  * ```
  */
 export const endpointsMap = {
-  users: { 
+  users: {
     getUsers: {
       path: '/users',
       method: HttpMethods.GET,

@@ -87,7 +87,7 @@ export class LocalStorageService {
   /**
    * Remove **todos** os valores armazenados no `localStorage`.
    *
-   * ⚠️ Atenção:
+   *  Atenção:
    * - Remove todas as chaves do domínio atual
    * - Deve ser usado com cuidado
    *

@@ -3,37 +3,26 @@
 import { useState, useCallback } from 'react'
 import { RequestConfig } from '../types/api/request-config'
 import { buildQuery, resolveEndpoint } from '@/lib/api/endpoints'
-
-const BASE_URL = 'http://localhost:3333' // TROCAR PELA ENV
+import { httpClient } from '@/lib/api/httpClient'
+import { HttpError } from '../types/api/http-errors'
 
 /**
- * Hook genérico para realizar requisições HTTP usando `fetch`.
+ * Hook genérico para realizar requisições HTTP
+ * utilizando o HttpClient (Axios instance).
  *
- * Fornece controle de estado para:
- * - `data`: resposta da requisição
- * - `loading`: status de carregamento
- * - `error`: erro ocorrido na requisição
+ * Responsabilidades:
+ * - Controlar estado de loading
+ * - Armazenar dados da resposta
+ * - Armazenar erro normalizado (HttpError)
  *
  * Suporta:
  * - Métodos HTTP (GET, POST, PUT, PATCH, DELETE)
  * - Path params (`/users/:id`)
- * - Query params (`?page=1`)
+ * - Query params
  * - Body (JSON)
  * - Headers customizados
  *
- * @template TResponse Tipo esperado da resposta da requisição
- *
- * @example
- * ```ts
- * const { data, loading, error, request } = useRequest<User>()
- *
- * useEffect(() => {
- *   request({
- *     endpoint: '/users/:id',
- *     params: { id: 1 },
- *   })
- * }, [])
- * ```
+ * @template TResponse Tipo esperado da resposta
  */
 export function useRequest<TResponse = unknown>() {
   /**
@@ -47,9 +36,9 @@ export function useRequest<TResponse = unknown>() {
   const [loading, setLoading] = useState(false)
 
   /**
-   * Erro retornado pela requisição, caso ocorra
+   * Erro retornado pela requisição (normalizado pelo HttpClient)
    */
-  const [error, setError] = useState<Error | null>(null)
+  const [error, setError] = useState<HttpError | null>(null)
 
   /**
    * Executa uma requisição HTTP.
@@ -57,23 +46,15 @@ export function useRequest<TResponse = unknown>() {
    * @template TBody Tipo do corpo da requisição
    *
    * @param config Configuração da requisição
-   * @param config.endpoint Endpoint da API (ex: `/users/:id`)
-   * @param config.method Método HTTP (default: `GET`)
-   * @param config.params Parâmetros de rota (path params)
-   * @param config.query Query params
-   * @param config.body Corpo da requisição (JSON)
-   * @param config.headers Headers adicionais
+   * @returns Promise<TResponse>
    *
-   * @returns Promise com os dados da resposta
-   *
-   * @throws Error Caso a requisição falhe ou a resposta não seja `ok`
+   * @throws HttpError Caso a requisição falhe
    *
    * @example
    * ```ts
    * await request({
-   *   endpoint: '/users',
-   *   method: 'POST',
-   *   body: { name: 'Gustavo' },
+   *   endpoint: '/users/:id',
+   *   params: { id: 1 }
    * })
    * ```
    */
@@ -85,36 +66,35 @@ export function useRequest<TResponse = unknown>() {
       query,
       body,
       headers,
-    }: RequestConfig<TBody>) => {
+    }: RequestConfig<TBody>): Promise<TResponse> => {
       setLoading(true)
       setError(null)
 
       try {
+        // Resolve path params
         const resolvedEndpoint = resolveEndpoint(endpoint, params)
+
+        // Constrói query string se existir
         const queryString = buildQuery(query)
 
-        const response = await fetch(
-          `${BASE_URL}${resolvedEndpoint}${queryString}`,
-          {
-            method,
-            headers: {
-              'Content-Type': 'application/json',
-              ...headers,
-            },
-            body: body ? JSON.stringify(body) : undefined,
-          }
-        )
+        /**
+         * Chamada para o HttpClient.
+         *
+         * A baseURL já está configurada internamente no Axios.
+         */
+        const response = await httpClient.request<TResponse, TBody>({
+          url: `${resolvedEndpoint}${queryString}`,
+          method,
+          body,
+          headers,
+        })
 
-        if (!response.ok) {
-          throw new Error(`Erro ${response.status}`)
-        }
-
-        const responseData = await response.json()
-        setData(responseData)
-        return responseData
+        setData(response.data)
+        return response.data
       } catch (err) {
-        setError(err as Error)
-        throw err
+        const normalizedError = err as HttpError
+        setError(normalizedError)
+        throw normalizedError
       } finally {
         setLoading(false)
       }

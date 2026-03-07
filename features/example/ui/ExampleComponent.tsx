@@ -1,6 +1,6 @@
 'use client'
 
-import { useUIStore } from '@/shared/store/ui.store'
+import { useUIStore } from '@/config/ui.config'
 
 export function ExampleComponent() {
   const { isSidebarOpen, setSidebarOpen } = useUIStore()

@@ -1,4 +1,4 @@
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
+import { HttpMethod } from "./http-types"
 
 export interface RequestConfig<TBody = unknown> {
   method?: HttpMethod
@@ -6,5 +6,5 @@ export interface RequestConfig<TBody = unknown> {
   params?: Record<string, string | number>
   query?: Record<string, string | number>
   body?: TBody
-  headers?: HeadersInit
+  headers?: Record<string, string>
 }

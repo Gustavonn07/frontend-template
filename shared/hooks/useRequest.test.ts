@@ -1,32 +1,35 @@
+import { act, renderHook } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { renderHook, act } from '@testing-library/react'
+import { HttpError } from '../types/api/http-errors'
 import { useRequest } from './useRequest'
+import { httpClient } from '@/lib/api/httpClient'
 
-const mockFetch = vi.fn()
-global.fetch = mockFetch
+vi.mock('@/lib/api/httpClient', () => ({
+  httpClient: {
+    request: vi.fn(),
+  },
+}))
 
 beforeEach(() => {
   vi.clearAllMocks()
 })
 
-function mockFetchResponse(
-  data: object,
-  ok: boolean = true,
-  status: number = 200
-) {
-  mockFetch.mockResolvedValueOnce({
-    ok,
+function mockHttpResponse(data: object, status: number = 200) {
+  vi.mocked(httpClient.request).mockResolvedValueOnce({
+    data,
     status,
-    json: async () => data,
+    headers: {},
   })
 }
 
 describe('useRequest', () => {
-  it('should do GET successfuly (default)', async () => {
+  it('should do GET successfully (default)', async () => {
     const responseData = { id: 1, name: 'Gustavo' }
-    mockFetchResponse(responseData)
+    mockHttpResponse(responseData)
 
-    const { result } = renderHook(() => useRequest<typeof responseData>())
+    const { result } = renderHook(() =>
+      useRequest<typeof responseData>()
+    )
 
     await act(async () => {
       const data = await result.current.request({
@@ -37,8 +40,7 @@ describe('useRequest', () => {
       expect(data).toEqual(responseData)
     })
 
-    expect(mockFetch).toHaveBeenCalledWith(
-      'http://localhost:3333/users/1',
+    expect(httpClient.request).toHaveBeenCalledWith(
       expect.objectContaining({
         method: 'GET',
       })
@@ -48,11 +50,13 @@ describe('useRequest', () => {
     expect(result.current.data).toEqual(responseData)
   })
 
-  it('should do POST successfuly using body', async () => {
+  it('should do POST successfully using body', async () => {
     const responseData = { id: 1 }
-    mockFetchResponse(responseData)
+    mockHttpResponse(responseData)
 
-    const { result } = renderHook(() => useRequest<typeof responseData>())
+    const { result } = renderHook(() =>
+      useRequest<typeof responseData>()
+    )
 
     await act(async () => {
       await result.current.request({
@@ -62,20 +66,21 @@ describe('useRequest', () => {
       })
     })
 
-    expect(mockFetch).toHaveBeenCalledWith(
-      'http://localhost:3333/users',
+    expect(httpClient.request).toHaveBeenCalledWith(
       expect.objectContaining({
         method: 'POST',
-        body: JSON.stringify({ name: 'Gustavo' }),
+        body: { name: 'Gustavo' },
       })
     )
   })
 
-  it('should do PUT successfuly using params and body', async () => {
+  it('should do PUT successfully using params and body', async () => {
     const responseData = { success: true }
-    mockFetchResponse(responseData)
+    mockHttpResponse(responseData)
 
-    const { result } = renderHook(() => useRequest<typeof responseData>())
+    const { result } = renderHook(() =>
+      useRequest<typeof responseData>()
+    )
 
     await act(async () => {
       await result.current.request({
@@ -86,8 +91,7 @@ describe('useRequest', () => {
       })
     })
 
-    expect(mockFetch).toHaveBeenCalledWith(
-      'http://localhost:3333/users/2',
+    expect(httpClient.request).toHaveBeenCalledWith(
       expect.objectContaining({
         method: 'PUT',
       })
@@ -96,9 +100,11 @@ describe('useRequest', () => {
 
   it('should do PATCH', async () => {
     const responseData = { updated: true }
-    mockFetchResponse(responseData)
+    mockHttpResponse(responseData)
 
-    const { result } = renderHook(() => useRequest<typeof responseData>())
+    const { result } = renderHook(() =>
+      useRequest<typeof responseData>()
+    )
 
     await act(async () => {
       await result.current.request({
@@ -109,19 +115,20 @@ describe('useRequest', () => {
       })
     })
 
-    expect(mockFetch).toHaveBeenCalledWith(
-      'http://localhost:3333/users/3',
+    expect(httpClient.request).toHaveBeenCalledWith(
       expect.objectContaining({
         method: 'PATCH',
       })
     )
   })
 
-  it('should do DELETE successfuly using params', async () => {
+  it('should do DELETE successfully using params', async () => {
     const responseData = { deleted: true }
-    mockFetchResponse(responseData)
+    mockHttpResponse(responseData)
 
-    const { result } = renderHook(() => useRequest<typeof responseData>())
+    const { result } = renderHook(() =>
+      useRequest<typeof responseData>()
+    )
 
     await act(async () => {
       await result.current.request({
@@ -131,21 +138,24 @@ describe('useRequest', () => {
       })
     })
 
-    expect(mockFetch).toHaveBeenCalledWith(
-      'http://localhost:3333/users/10',
+    expect(httpClient.request).toHaveBeenCalledWith(
       expect.objectContaining({
         method: 'DELETE',
-        body: undefined,
       })
     )
   })
 
-  it('resolve errors when is not OK', async () => {
-    mockFetchResponse({ message: 'Erro interno' }, false, 500)
+  it('should resolve errors when request fails with HttpError', async () => {
+    const httpError: HttpError = {
+      message: 'Erro interno',
+      status: 500,
+    }
+
+    vi.mocked(httpClient.request).mockRejectedValueOnce(httpError)
 
     const { result } = renderHook(() => useRequest())
 
-    let error: Error | undefined
+    let error: HttpError | undefined
 
     await act(async () => {
       try {
@@ -153,23 +163,25 @@ describe('useRequest', () => {
           endpoint: '/error',
         })
       } catch (err) {
-        error = err as Error
+        error = err as HttpError
       }
     })
 
-    expect(error).toBeInstanceOf(Error)
-    expect(error?.message).toBe('Erro 500')
-
-    expect(result.current.error).toBeInstanceOf(Error)
+    expect(error?.message).toBe('Erro interno')
+    expect(result.current.error?.message).toBe('Erro interno')
     expect(result.current.loading).toBe(false)
   })
 
-  it('should resolve errors with exception', async () => {
-    mockFetch.mockRejectedValueOnce(new Error('Network error'))
+  it('should resolve network errors', async () => {
+    const networkError: HttpError = {
+      message: 'Network error',
+    }
+
+    vi.mocked(httpClient.request).mockRejectedValueOnce(networkError)
 
     const { result } = renderHook(() => useRequest())
 
-    let error: Error | undefined
+    let error: HttpError | undefined
 
     await act(async () => {
       try {
@@ -177,15 +189,12 @@ describe('useRequest', () => {
           endpoint: '/users',
         })
       } catch (err) {
-        error = err as Error
+        error = err as HttpError
       }
     })
 
-    expect(error).toBeInstanceOf(Error)
     expect(error?.message).toBe('Network error')
-
     expect(result.current.error?.message).toBe('Network error')
     expect(result.current.loading).toBe(false)
   })
-
 })
