@@ -14,12 +14,13 @@ Este componente encapsula estilos e comportamento reutilizável.
 ## Estrutura básica
 
 ```tsx
-import { Tooltip } from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 export function Example() {
   return (
     <Tooltip>
-      Conteúdo
+      <TooltipTrigger>Trigger</TooltipTrigger>
+      <TooltipContent>Conteúdo</TooltipContent>
     </Tooltip>
   )
 }
