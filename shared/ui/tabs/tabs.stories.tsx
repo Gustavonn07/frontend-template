@@ -1,19 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Button } from "./button"
+import { Tabs } from "./tabs"
 
-const meta: Meta<typeof Button> = {
-  title: "UI/Button",
-  component: Button,
+const meta: Meta<typeof Tabs> = {
+  title: "UI/Tabs",
+  component: Tabs,
   parameters: {
     layout: "centered",
   },
 }
 
 export default meta
-type Story = StoryObj<typeof Button>
+type Story = StoryObj<typeof Tabs>
 
 export const Default: Story = {
   args: {
-    children: "Button"
+    children: "Tabs"
   }
 }

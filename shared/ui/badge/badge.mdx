@@ -1,0 +1,32 @@
+import { Meta, Canvas, Story, Controls } from "@storybook/addon-docs/blocks"
+import * as BadgeStories from "./badge.stories"
+
+<Meta of={BadgeStories} />
+
+# Badge
+
+O **Badge** é um componente de interface utilizado dentro do design system para compor interfaces consistentes.
+
+## Como funciona
+
+Este componente encapsula estilos e comportamento reutilizável.
+
+## Estrutura básica
+
+```tsx
+import { Badge } from "@/components/ui/badge"
+
+export function Example() {
+  return (
+    <Badge>
+      Conteúdo
+    </Badge>
+  )
+}
+```
+
+## Exemplo básico
+
+<Canvas>
+  <Story of={BadgeStories.Default} />
+</Canvas>

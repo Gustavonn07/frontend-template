@@ -1,0 +1,32 @@
+import { Meta, Canvas, Story, Controls } from "@storybook/addon-docs/blocks"
+import * as AvatarStories from "./avatar.stories"
+
+<Meta of={AvatarStories} />
+
+# Avatar
+
+O **Avatar** é um componente de interface utilizado dentro do design system para compor interfaces consistentes.
+
+## Como funciona
+
+Este componente encapsula estilos e comportamento reutilizável.
+
+## Estrutura básica
+
+```tsx
+import { Avatar } from "@/components/ui/avatar"
+
+export function Example() {
+  return (
+    <Avatar>
+      Conteúdo
+    </Avatar>
+  )
+}
+```
+
+## Exemplo básico
+
+<Canvas>
+  <Story of={AvatarStories.Default} />
+</Canvas>

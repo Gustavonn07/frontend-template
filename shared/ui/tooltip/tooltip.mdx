@@ -1,0 +1,32 @@
+import { Meta, Canvas, Story, Controls } from "@storybook/addon-docs/blocks"
+import * as TooltipStories from "./tooltip.stories"
+
+<Meta of={TooltipStories} />
+
+# Tooltip
+
+O **Tooltip** é um componente de interface utilizado dentro do design system para compor interfaces consistentes.
+
+## Como funciona
+
+Este componente encapsula estilos e comportamento reutilizável.
+
+## Estrutura básica
+
+```tsx
+import { Tooltip } from "@/components/ui/tooltip"
+
+export function Example() {
+  return (
+    <Tooltip>
+      Conteúdo
+    </Tooltip>
+  )
+}
+```
+
+## Exemplo básico
+
+<Canvas>
+  <Story of={TooltipStories.Default} />
+</Canvas>

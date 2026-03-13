@@ -1,0 +1,32 @@
+import { Meta, Canvas, Story, Controls } from "@storybook/addon-docs/blocks"
+import * as ResizableStories from "./resizable.stories"
+
+<Meta of={ResizableStories} />
+
+# Resizable
+
+O **Resizable** é um componente de interface utilizado dentro do design system para compor interfaces consistentes.
+
+## Como funciona
+
+Este componente encapsula estilos e comportamento reutilizável.
+
+## Estrutura básica
+
+```tsx
+import { Resizable } from "@/components/ui/resizable"
+
+export function Example() {
+  return (
+    <Resizable>
+      Conteúdo
+    </Resizable>
+  )
+}
+```
+
+## Exemplo básico
+
+<Canvas>
+  <Story of={ResizableStories.Default} />
+</Canvas>

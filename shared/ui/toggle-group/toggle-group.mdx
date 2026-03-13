@@ -1,0 +1,32 @@
+import { Meta, Canvas, Story, Controls } from "@storybook/addon-docs/blocks"
+import * as ToggleGroupStories from "./toggle-group.stories"
+
+<Meta of={ToggleGroupStories} />
+
+# ToggleGroup
+
+O **ToggleGroup** é um componente de interface utilizado dentro do design system para compor interfaces consistentes.
+
+## Como funciona
+
+Este componente encapsula estilos e comportamento reutilizável.
+
+## Estrutura básica
+
+```tsx
+import { ToggleGroup } from "@/components/ui/toggle-group"
+
+export function Example() {
+  return (
+    <ToggleGroup>
+      Conteúdo
+    </ToggleGroup>
+  )
+}
+```
+
+## Exemplo básico
+
+<Canvas>
+  <Story of={ToggleGroupStories.Default} />
+</Canvas>

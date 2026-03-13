@@ -1,0 +1,32 @@
+import { Meta, Canvas, Story, Controls } from "@storybook/addon-docs/blocks"
+import * as InputStories from "./input.stories"
+
+<Meta of={InputStories} />
+
+# Input
+
+O **Input** é um componente de interface utilizado dentro do design system para compor interfaces consistentes.
+
+## Como funciona
+
+Este componente encapsula estilos e comportamento reutilizável.
+
+## Estrutura básica
+
+```tsx
+import { Input } from "@/components/ui/input"
+
+export function Example() {
+  return (
+    <Input>
+      Conteúdo
+    </Input>
+  )
+}
+```
+
+## Exemplo básico
+
+<Canvas>
+  <Story of={InputStories.Default} />
+</Canvas>

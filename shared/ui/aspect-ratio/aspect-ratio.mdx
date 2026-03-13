@@ -1,0 +1,32 @@
+import { Meta, Canvas, Story, Controls } from "@storybook/addon-docs/blocks"
+import * as AspectRatioStories from "./aspect-ratio.stories"
+
+<Meta of={AspectRatioStories} />
+
+# AspectRatio
+
+O **AspectRatio** é um componente de interface utilizado dentro do design system para compor interfaces consistentes.
+
+## Como funciona
+
+Este componente encapsula estilos e comportamento reutilizável.
+
+## Estrutura básica
+
+```tsx
+import { AspectRatio } from "@/components/ui/aspect-ratio"
+
+export function Example() {
+  return (
+    <AspectRatio>
+      Conteúdo
+    </AspectRatio>
+  )
+}
+```
+
+## Exemplo básico
+
+<Canvas>
+  <Story of={AspectRatioStories.Default} />
+</Canvas>
