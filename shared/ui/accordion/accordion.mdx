@@ -1,0 +1,259 @@
+import { Meta, Canvas, Story, Controls } from "@storybook/addon-docs/blocks"
+import * as AccordionStories from "./accordion.stories"
+
+<Meta of={AccordionStories} />
+
+# Accordion
+
+O **Accordion** é um componente que permite **expandir e colapsar seções de conteúdo**.
+
+Ele organiza informações em blocos independentes chamados **items**, onde cada item possui:
+
+* um **trigger** (botão que controla o estado)
+* um **content** (conteúdo exibido quando aberto)
+
+O estado de abertura é controlado pelo componente `Accordion`, que define **como os itens se comportam** (um aberto ou vários abertos).
+
+---
+
+# Como funciona
+
+O Accordion trabalha com **controle de estado interno baseado em valores (`value`)**.
+
+Cada `AccordionItem` possui um identificador:
+
+```tsx
+value="item-1"
+```
+
+O componente `Accordion` utiliza esses valores para determinar **quais itens estão abertos**.
+
+Existem dois modos de funcionamento:
+
+### `single`
+
+Apenas **um item pode ficar aberto por vez**.
+
+Abrir um novo item fecha o anterior.
+
+### `multiple`
+
+Permite que **vários itens permaneçam abertos simultaneamente**.
+
+---
+
+# Estrutura básica
+
+A estrutura mínima do Accordion é composta por quatro componentes:
+
+```tsx
+<Accordion>
+  <AccordionItem>
+    <AccordionTrigger />
+    <AccordionContent />
+  </AccordionItem>
+</Accordion>
+```
+
+### Hierarquia
+
+```
+Accordion
+ └ AccordionItem
+    ├ AccordionTrigger
+    └ AccordionContent
+```
+
+---
+
+# Exemplo básico
+
+<Canvas>
+  <Story of={AccordionStories.Default} />
+</Canvas>
+
+```tsx
+<Accordion type="single" collapsible>
+
+  <AccordionItem value="item-1">
+    <AccordionTrigger>
+      What is React?
+    </AccordionTrigger>
+
+    <AccordionContent>
+      React is a library for building user interfaces.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="item-2">
+    <AccordionTrigger>
+      What is Next.js?
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Next.js is a framework built on top of React.
+    </AccordionContent>
+  </AccordionItem>
+
+</Accordion>
+```
+
+---
+
+## Estrutura dos componentes
+
+<table>
+  <thead>
+    <tr>
+      <th>Componente</th>
+      <th>Função</th>
+      <th>Props principais</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Accordion</code></td>
+      <td>Container principal responsável por controlar o estado de abertura dos itens.</td>
+      <td>
+        <ul>
+          <li><code>type: "single" | "multiple"</code> — define o modo de funcionamento</li>
+          <li><code>collapsible?: boolean</code> — permite fechar o item ativo</li>
+          <li><code>defaultValue?: string | string[]</code> — itens abertos inicialmente</li>
+          <li><code>value?: string | string[]</code> — estado controlado externamente</li>
+          <li><code>onValueChange?: (value) =&gt; void</code> — callback de mudança</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>AccordionItem</code></td>
+      <td>Representa uma seção individual do accordion.</td>
+      <td>
+        <ul>
+          <li><code>value: string</code> — identificador único do item</li>
+          <li><code>disabled?: boolean</code> — desativa interação</li>
+          <li><code>className?: string</code> — customização de estilo</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>AccordionTrigger</code></td>
+      <td>Elemento interativo que abre ou fecha o conteúdo do item.</td>
+      <td>
+        <ul>
+          <li><code>className?: string</code> — estilos personalizados</li>
+          <li><code>children: ReactNode</code> — título do item</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>AccordionContent</code></td>
+      <td>Área onde o conteúdo expandido é exibido.</td>
+      <td>
+        <ul>
+          <li><code>className?: string</code> — estilos personalizados</li>
+          <li><code>children: ReactNode</code> — conteúdo renderizado</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+# Tipos principais
+
+Alguns tipos importantes usados pelo Accordion:
+
+```ts
+type AccordionType = "single" | "multiple"
+```
+
+Quando o tipo é `"single"`:
+
+```ts
+value: string
+```
+
+Quando o tipo é `"multiple"`:
+
+```ts
+value: string[]
+```
+
+Isso permite controlar o componente de forma **controlada ou não controlada**.
+
+---
+
+# Exemplo com múltiplos itens
+
+<Canvas>
+  <Story of={AccordionStories.Multiple} />
+</Canvas>
+
+```tsx
+<Accordion type="multiple">
+
+  <AccordionItem value="item-1">
+    <AccordionTrigger>
+      First section
+    </AccordionTrigger>
+
+    <AccordionContent>
+      Multiple sections can stay open.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="item-2">
+    <AccordionTrigger>
+      Second section
+    </AccordionTrigger>
+
+    <AccordionContent>
+      This behavior is controlled by the type prop.
+    </AccordionContent>
+  </AccordionItem>
+
+</Accordion>
+```
+
+---
+
+# Controle de estado (modo controlado)
+
+O Accordion também pode ser controlado externamente:
+
+```tsx
+const [value, setValue] = useState("item-1")
+
+<Accordion
+  type="single"
+  value={value}
+  onValueChange={setValue}
+>
+
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Section</AccordionTrigger>
+    <AccordionContent>Content</AccordionContent>
+  </AccordionItem>
+
+</Accordion>
+```
+
+Isso é útil quando o estado precisa ser sincronizado com:
+
+* formulários
+* URL
+* estado global
+* lógica de aplicação
+
+---
+
+Ele pode funcionar em dois modos:
+
+* `single`
+* `multiple`
+
+E suporta **controle interno ou externo de estado**.

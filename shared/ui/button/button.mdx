@@ -1,0 +1,246 @@
+
+import { Meta, Canvas, Story, Controls } from "@storybook/addon-docs/blocks"
+import * as ButtonStories from "./button.stories"
+
+<Meta of={ButtonStories} />
+
+# Button
+
+O **Button** é um componente fundamental de interface utilizado para **disparar ações dentro da aplicação**. Ele representa um ponto de interação direto entre o usuário e o sistema, permitindo executar comandos como enviar formulários, abrir modais, navegar entre páginas ou confirmar operações.
+
+Botões estão presentes em praticamente todas as interfaces modernas e são essenciais para guiar o fluxo de interação do usuário. No design system, o componente **Button** garante consistência visual, acessibilidade e comportamento padronizado para todas as ações clicáveis da interface.
+
+Internamente, o componente foi projetado para suportar **múltiplas variações visuais (variants)** e **tamanhos (sizes)**, permitindo reutilização em diferentes contextos da interface. Ele também suporta composição com outros elementos através da propriedade `asChild`, possibilitando que o botão herde o comportamento de outros componentes mantendo o estilo do design system.
+
+---
+
+# Como funciona
+
+O componente **Button** é construído utilizando **React**, **class-variance-authority (CVA)** para controle de variantes de estilo e **Radix Slot** para permitir composição com outros elementos.
+
+A lógica de estilo do botão é centralizada na função `buttonVariants`, que define as classes base e as variações possíveis do componente.
+
+```ts
+const buttonVariants = cva("base classes", {
+  variants: {
+    variant: {
+      default: "...",
+      outline: "...",
+      secondary: "...",
+      ghost: "...",
+      destructive: "...",
+      link: "...",
+    },
+    size: {
+      default: "...",
+      sm: "...",
+      lg: "...",
+      icon: "...",
+    }
+  }
+})
+```
+
+Essas variantes são aplicadas dinamicamente ao botão através das propriedades `variant` e `size`.
+
+```tsx
+<Button variant="secondary" size="lg">
+  Salvar alterações
+</Button>
+```
+
+Outra característica importante é a propriedade `asChild`. Quando utilizada, o botão renderiza um **Radix Slot**, permitindo aplicar o estilo do botão a outro elemento, como um `Link`.
+
+```tsx
+<Button asChild>
+  <a href="/dashboard">Ir para dashboard</a>
+</Button>
+```
+
+Isso permite manter consistência visual mesmo quando o botão precisa ser renderizado como outro elemento HTML.
+
+---
+
+# Estrutura básica
+
+A estrutura mínima para utilizar o componente **Button** consiste apenas em importar o componente e fornecer o conteúdo interno que será exibido.
+
+```tsx
+import { Button } from "@/components/ui/button"
+
+export function Example() {
+  return (
+    <Button>
+      Clique aqui
+    </Button>
+  )
+}
+```
+
+## Hierarquia
+
+A composição estrutural do componente pode ser representada da seguinte forma:
+
+```
+Button
+ └─ button (ou Slot.Root quando asChild = true)
+     └─ children (texto, ícone ou elementos internos)
+```
+
+---
+
+# Exemplo básico
+
+<Canvas>
+  <Story of={ButtonStories.Default} />
+</Canvas>
+
+Exemplo de uso do botão em um componente React:
+
+```tsx
+import { Button } from "@/components/ui/button"
+
+export function SaveButton() {
+  return (
+    <Button>
+      Salvar
+    </Button>
+  )
+}
+```
+
+---
+
+# Estrutura dos componentes
+
+<table>
+  <thead>
+    <tr>
+      <th>Componente</th>
+      <th>Função</th>
+      <th>Props principais</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Button</td>
+      <td>Componente principal responsável por renderizar o botão e aplicar estilos base, variantes e tamanhos.</td>
+      <td>
+        <ul>
+          <li>variant</li>
+          <li>size</li>
+          <li>asChild</li>
+          <li>className</li>
+          <li>children</li>
+          <li>disabled</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+# Tipos principais
+
+O componente utiliza **VariantProps** do `class-variance-authority` para inferir automaticamente os tipos das variantes.
+
+```ts
+VariantProps<typeof buttonVariants>
+```
+
+### Variantes disponíveis
+
+```ts
+type ButtonVariant =
+  | "default"
+  | "outline"
+  | "secondary"
+  | "ghost"
+  | "destructive"
+  | "link"
+```
+
+### Tamanhos disponíveis
+
+```ts
+type ButtonSize =
+  | "default"
+  | "xs"
+  | "sm"
+  | "lg"
+  | "icon"
+  | "icon-xs"
+  | "icon-sm"
+  | "icon-lg"
+```
+
+### Tipagem completa do componente
+
+```ts
+React.ComponentProps<"button"> &
+VariantProps<typeof buttonVariants> & {
+  asChild?: boolean
+}
+```
+
+Isso permite que o componente aceite **todas as propriedades nativas de um botão HTML**, além das variantes definidas no design system.
+
+---
+
+# Exemplo adicional
+
+O componente pode ser utilizado com diferentes variantes visuais para representar diferentes tipos de ação na interface.
+
+<Canvas>
+  <Story of={ButtonStories.Variants} />
+</Canvas>
+
+Exemplo utilizando múltiplas variantes:
+
+```tsx
+import { Button } from "@/components/ui/button"
+
+export function ActionsExample() {
+  return (
+    <div className="flex gap-2">
+      <Button variant="default">Salvar</Button>
+      <Button variant="secondary">Cancelar</Button>
+      <Button variant="outline">Editar</Button>
+      <Button variant="ghost">Visualizar</Button>
+      <Button variant="destructive">Excluir</Button>
+    </div>
+  )
+}
+```
+
+---
+
+# Controle de estado (modo controlado)
+
+O componente **Button** normalmente não possui controle de estado interno, pois sua função principal é **disparar ações** através de eventos como `onClick`.
+
+O controle de comportamento geralmente ocorre no componente pai.
+
+```tsx
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+
+export function ToggleExample() {
+  const [loading, setLoading] = useState(false)
+
+  function handleClick() {
+    setLoading(true)
+
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000)
+  }
+
+  return (
+    <Button onClick={handleClick} disabled={loading}>
+      {loading ? "Carregando..." : "Enviar"}
+    </Button>
+  )
+}
+```
