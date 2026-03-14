@@ -1,5 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
-import { Button } from "./button";
+import { Button, type SizeButtonOptionsType, type VariantButtonOptionsType } from "./button";
+
+const SIZE_OPTIONS: SizeButtonOptionsType[] = ["default", "xs", "sm", "lg", "icon", "icon-xs", "icon-sm", "icon-lg"]
+
+const VARIANT_OPTIONS: VariantButtonOptionsType[] = ["default", "outline", "secondary", "ghost", "destructive", "link"]
 
 const meta: Meta<typeof Button> = {
   title: "UI/Button",
@@ -10,11 +14,11 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: { type: "select" },
-      options: ["default", "outline", "secondary", "ghost", "destructive", "link"],
+      options: VARIANT_OPTIONS,
     },
     size: {
       control: { type: "select" },
-      options: ["default", "xs", "sm", "lg", "icon", "icon-xs", "icon-sm", "icon-lg"],
+      options: SIZE_OPTIONS,
     },
     asChild: { control: false },
   },

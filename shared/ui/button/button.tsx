@@ -41,16 +41,19 @@ const buttonVariants = cva(
   }
 )
 
+type PropsButton =  VariantProps<typeof buttonVariants> & { asChild?: boolean };
+
+export type SizeButtonOptionsType = PropsButton['size']
+
+export type VariantButtonOptionsType = PropsButton['variant']
+
 function Button({
   className,
   variant = "default",
   size = "default",
   asChild = false,
   ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
+}: React.ComponentProps<"button"> & PropsButton) {
   const Comp = asChild ? Slot.Root : "button"
 
   return (
