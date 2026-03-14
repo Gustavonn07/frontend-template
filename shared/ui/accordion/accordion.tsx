@@ -6,34 +6,6 @@ import { Accordion as AccordionPrimitive } from "radix-ui"
 import { cn } from "@/lib/utils"
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 
-// Gere documentações técnicas em MDX para Storybook seguindo o padrão usado em projetos com Storybook. A documentação deve sempre começar com a importação dos blocos de docs (Meta, Canvas, Story, Controls) vindos de @storybook/addon-docs/blocks e a importação de todas as stories do componente. Em seguida deve ser usado <Meta of={ComponentStories} /> para conectar a documentação ao arquivo .stories.tsx. O nome do import das stories deve sempre seguir o padrão ComponentStories.
-
-// A documentação deve começar com um título principal com o nome do componente e uma explicação clara sobre o que ele é e qual problema resolve na interface. A introdução deve explicar o propósito do componente e em quais cenários ele é normalmente utilizado. Depois da introdução deve existir uma explicação conceitual sobre como o componente organiza seus elementos internos ou como ele é estruturado, descrevendo brevemente suas partes principais.
-
-// Após a introdução deve existir uma seção chamada "Como funciona", explicando o comportamento do componente e sua lógica de funcionamento. Essa seção deve explicar conceitos importantes como controle de estado, fluxo de interação do usuário ou comportamento interno do componente. Sempre que existir algum identificador, valor ou propriedade importante para o funcionamento do componente, ele deve ser demonstrado em um pequeno trecho de código.
-
-// Depois disso deve existir uma seção chamada "Estrutura básica", mostrando a composição mínima do componente em JSX/TSX. Essa seção deve conter um bloco de código mostrando a estrutura mínima necessária para utilizar o componente. Logo abaixo deve existir uma subseção chamada "Hierarquia", demonstrando a estrutura dos subcomponentes usando uma representação em árvore textual.
-
-// Após a explicação da estrutura deve existir uma seção chamada "Exemplo básico", onde uma story real do Storybook é renderizada usando <Canvas> e <Story of={ComponentStories.Default} />. Abaixo do preview deve existir também um exemplo de código mostrando o uso prático do componente.
-
-// Em seguida deve existir uma seção chamada "Estrutura dos componentes" contendo uma tabela sempre feita usando HTML (<table>) e nunca usando markdown com | ou ---. Essa tabela deve possuir três colunas: Componente, Função e Props principais. Cada linha da tabela deve representar um subcomponente e na coluna de props deve existir uma lista <ul> com as propriedades principais daquele elemento.
-
-// Depois disso deve existir uma seção chamada "Tipos principais", explicando os tipos ou enums importantes usados pelo componente. Sempre que possível os tipos devem ser apresentados em blocos de código TypeScript.
-
-// Após isso deve existir uma seção chamada "Exemplo com variação", demonstrando outro comportamento ou modo do componente. Essa seção também deve renderizar uma story usando <Canvas> e <Story> e deve incluir um bloco de código mostrando o exemplo completo.
-
-// Se o componente permitir controle externo de estado, deve existir uma seção chamada "Controle de estado (modo controlado)", explicando como controlar o componente externamente usando value, onChange, onValueChange ou propriedades equivalentes. Essa seção deve incluir um exemplo de código usando useState.
-
-// Sempre que forem necessárias tabelas de propriedades ou estrutura, deve-se usar exclusivamente HTML <table> em vez de tabelas markdown. O padrão de tabela deve usar <thead>, <tbody>, <tr>, <th> e <td>. Quando necessário, listas de propriedades dentro da tabela devem ser representadas usando <ul> e <li>.
-
-// A documentação deve seguir exatamente essa estrutura de seções: Introdução → Como funciona → Estrutura básica → Hierarquia → Exemplo básico → Estrutura dos componentes (com tabela HTML) → Tipos principais → Exemplo adicional → Controle de estado. O objetivo é manter um padrão consistente de documentação para todos os componentes do design system.
-
-// Esse padrão deve ser usado para documentar componentes de UI como Accordion, Button, Modal, Input, Tabs, Dropdown e qualquer outro componente semelhante dentro do Storybook. Envie como um arquivo só, sem separaçao na resposta
-
-// Seguindo esse prompt crie a documentação do Button
-
-// Código: 
-
 function Accordion({
   className,
   ...props
