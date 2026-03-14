@@ -1,15 +1,16 @@
-import { Meta, Canvas, Story, Controls } from "@storybook/addon-docs/blocks"
+import { Meta, Canvas, Controls } from "@storybook/addon-docs/blocks"
 import * as SkeletonStories from "./skeleton.stories"
+import { Skeleton } from "./skeleton"
 
-<Meta of={SkeletonStories} />
+<Meta of={ SkeletonStories } />
 
 # Skeleton
 
-O **Skeleton** é um componente de interface utilizado dentro do design system para compor interfaces consistentes.
+Descrição do componente.
 
 ## Como funciona
 
-Este componente encapsula estilos e comportamento reutilizável.
+Explique como o componente funciona.
 
 ## Estrutura básica
 
@@ -19,14 +20,14 @@ import { Skeleton } from "@/components/ui/skeleton"
 export function Example() {
   return (
     <Skeleton>
-      Conteúdo
+      Example
     </Skeleton>
   )
 }
 ```
 
-## Exemplo básico
+## Controle interativo
+<Canvas> <Controls of={SkeletonStories.Default} /> </Canvas>
 
-<Canvas>
-  <Story of={SkeletonStories.Default} />
-</Canvas>
+## Props principais
+<ul> <li><strong>className</strong> – classes adicionais.</li> </ul>

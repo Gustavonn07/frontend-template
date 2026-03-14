@@ -1,10 +1,10 @@
 import { Meta, Canvas, Controls } from "@storybook/addon-docs/blocks"
-import * as AvatarStories from "./avatar.stories"
-import { Avatar } from "./avatar"
+import * as {{componentName}}Stories from "./{{fileName}}.stories"
+import { {{componentName}} } from "./{{fileName}}"
 
-<Meta of={ AvatarStories } />
+<Meta of={ {{componentName}}Stories } />
 
-# Avatar
+# {{componentName}}
 
 Descrição do componente.
 
@@ -15,19 +15,19 @@ Explique como o componente funciona.
 ## Estrutura básica
 
 ```tsx
-import { Avatar } from "@/components/ui/avatar"
+import { {{componentName}} } from "@/components/ui/{{fileName}}"
 
 export function Example() {
   return (
-    <Avatar>
+    <{{componentName}}>
       Example
-    </Avatar>
+    </{{componentName}}>
   )
 }
 ```
 
 ## Controle interativo
-<Canvas> <Controls of={AvatarStories.Default} /> </Canvas>
+<Canvas> <Controls of={{{componentName}}Stories.Default} /> </Canvas>
 
 ## Props principais
 <ul> <li><strong>className</strong> – classes adicionais.</li> </ul>
