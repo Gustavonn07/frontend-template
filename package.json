@@ -13,7 +13,8 @@
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "generate:docs": "tsx config/scripts/generate-docs.ts"
+    "generate:docs": "tsx config/scripts/generate-docs.ts",
+    "generate:index": "node config/scripts/generate-index.ts"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
