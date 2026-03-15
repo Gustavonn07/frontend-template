@@ -4,6 +4,7 @@ import { {{componentName}} } from "./{{fileName}}"
 const meta: Meta<typeof {{componentName}}> = {
   title: "UI/{{componentName}}",
   component: {{componentName}},
+  tags: ['autodocs'],
   parameters: {
     layout: "centered",
   },
