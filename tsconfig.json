@@ -30,6 +30,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
-  "exclude": ["node_modules"]
+, "config/scripts/templates/docs.template.mdx"  ],
+  "exclude": ["node_modules", "config/scripts/templates"]
 }
