@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { useState } from "react"
 import { DndProvider } from "./dnd-context"
-import { useDndHandlers } from "./useDndHandlers"
+import { useDndHandlers } from "./lib/useDndHandlers"
 import { DndCardList } from "../dnd-list/dnd-list"
 import { DndOverlay } from "../dnd-overlay/dnd-overlay"
 

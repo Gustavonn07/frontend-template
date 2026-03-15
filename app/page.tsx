@@ -5,7 +5,7 @@ import { useState } from "react"
 import { DndProvider } from "@/shared/widgets/dnd-context/dnd-context"
 import { DndCardList } from "@/shared/widgets/dnd-list/dnd-list"
 import { DndOverlay } from "@/shared/widgets/dnd-overlay/dnd-overlay"
-import { useDndHandlers } from "@/shared/widgets/dnd-context/useDndHandlers"
+import { useDndHandlers } from "@/shared/widgets/dnd-context/lib/useDndHandlers"
 
 type Item = {
   id: string
