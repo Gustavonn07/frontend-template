@@ -1,10 +1,8 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { RequestConfig } from '../types/api/request-config'
-import { buildQuery, resolveEndpoint } from '@/lib/api/endpoints'
-import { httpClient } from '@/lib/api/httpClient'
-import { HttpError } from '../types/api/http-errors'
+import { HttpError, RequestConfig } from '../types'
+import { buildQuery, httpClient, resolveEndpoint } from '../lib'
 
 /**
  * Hook genérico para realizar requisições HTTP

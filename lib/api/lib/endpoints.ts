@@ -1,5 +1,5 @@
-import { useRequest } from "@/shared/hooks/useRequest"
-import { EndpointConfig } from "@/shared/types/api/http-types"
+import { EndpointConfig } from "@/lib/api/types/http-types"
+import { useRequest } from "../hooks/useRequest"
 
 /**
  * Substitui os parâmetros de rota em um endpoint.

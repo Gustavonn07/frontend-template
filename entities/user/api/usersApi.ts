@@ -1,5 +1,5 @@
-import { createEndpointHook } from "@/lib/api/endpoints";
-import { endpointsMap } from "@/lib/api/endpointsMap";
+import { createEndpointHook } from "@/lib/api/lib/endpoints";
+import { endpointsMap } from "@/lib/api/lib/endpointsMap";
 
 export interface User {
   id: string

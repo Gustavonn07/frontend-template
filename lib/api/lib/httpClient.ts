@@ -1,5 +1,5 @@
-import { HttpError } from '@/shared/types/api/http-errors'
-import { HttpRequestConfig, HttpResponse } from '@/shared/types/api/http-types'
+import { HttpError } from '@/lib/api/types/http-errors'
+import { HttpRequestConfig, HttpResponse } from '@/lib/api/types/http-types'
 import axios, { AxiosInstance } from 'axios'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL

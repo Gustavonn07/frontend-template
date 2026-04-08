@@ -3,7 +3,7 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 import { HttpClient } from './httpClient'
-import { HttpError } from '@/shared/types/api/http-errors'
+import { HttpError } from '@/lib/api/types/http-errors'
 
 describe('HttpClient', () => {
   let mock: MockAdapter
