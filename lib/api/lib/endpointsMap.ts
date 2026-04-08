@@ -1,4 +1,4 @@
-import { HttpMethods } from "../../shared/types/api/http-types"
+import { HttpMethods } from "../types/http-types"
 
 /**
  * Mapa de endpoints da API.

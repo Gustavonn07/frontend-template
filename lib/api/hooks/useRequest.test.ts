@@ -1,8 +1,8 @@
 import { act, renderHook } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { HttpError } from '../types/api/http-errors'
+import { HttpError } from '../types'
+import { httpClient } from '../lib'
 import { useRequest } from './useRequest'
-import { httpClient } from '@/lib/api/httpClient'
 
 vi.mock('@/lib/api/httpClient', () => ({
   httpClient: {
