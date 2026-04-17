@@ -2,7 +2,7 @@ import { HttpError } from '@/lib/api/types/http-errors'
 import { HttpRequestConfig, HttpResponse } from '@/lib/api/types/http-types'
 import axios, { AxiosInstance } from 'axios'
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'localhost:3000'
 
 if (!BASE_URL) {
   console.error('[HttpClient] NEXT_PUBLIC_API_BASE_URL is not defined')
